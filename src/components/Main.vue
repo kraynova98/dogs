@@ -6,7 +6,7 @@
 import DogsTable from "@/components/dogs/DogsTable";
 
 export default {
-  name: "HelloWorld",
+  name: "MainComponent",
   components: {
     DogsTable,
   },

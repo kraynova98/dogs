@@ -2,14 +2,14 @@
   <div class="table">
     <template :key="index" v-for="(item, index) in data">
       <div class="table-item">
-        <router-link
-          :to="{
-            name: 'detail',
-            params: { id: item.id, info: dogInformation(item.id) },
-          }"
-        >
-          <img :src="item.url" :alt="item.url" />
-        </router-link>
+        <!--        <router-link-->
+        <!--          :to="{-->
+        <!--            name: 'detail',-->
+        <!--            params: { id: item.id, info: dogInformation(item.id) },-->
+        <!--          }"-->
+        <!--        >-->
+        <!--          <img :src="item.url" :alt="item.url" />-->
+        <!--        </router-link>-->
       </div>
     </template>
   </div>
@@ -25,11 +25,11 @@ export default {
     },
   },
 
-  methods: {
-    dogInformation(dogId) {
-      return this.data.filter((dog) => dog.id === dogId);
-    },
-  },
+  // methods: {
+  //   dogInformation(dogId) {
+  //     return this.data.filter((dog) => dog.id === dogId);
+  //   },
+  // },
 };
 </script>
 

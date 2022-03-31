@@ -7,21 +7,29 @@
 
 <script>
 import customTable from "@/components/common/CustomTable";
-import { DogsService } from "@/services/dogs/dogsTable";
+import { GET_DOGS_LIST } from "@/constants/actions";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "DogsTable",
   components: {
     customTable,
   },
-  data() {
-    return {
-      dogsList: null,
-    };
+
+  created() {
+    this.GET_DOGS_LIST();
   },
 
-  mounted() {
-    console.log(DogsService.getDogsList());
+  computed: {
+    ...mapState("dogsTable", {
+      dogsList: (state) => state,
+    }),
+  },
+
+  methods: {
+    ...mapActions("dogsTable", {
+      GET_DOGS_LIST,
+    }),
   },
 };
 </script>
