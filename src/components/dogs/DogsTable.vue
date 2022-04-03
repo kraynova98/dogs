@@ -1,19 +1,27 @@
 <template>
   <div class="dogs-table__wrapper">
-    <customTable :data="dogsList"></customTable>
-    <span>Test</span>
+    <CustomTable
+      :data="dogsList"
+      :total="total"
+      v-model:per-page="limit"
+      v-model:page="page"
+    ></CustomTable>
   </div>
 </template>
 
 <script>
-import customTable from "@/components/common/CustomTable";
-import { GET_DOGS_LIST } from "@/constants/actions";
+import CustomTable from "@/components/common/CustomTable";
+import {
+  GET_DOGS_LIST,
+  UPDATE_DOGS_LIST_PAGINATION,
+} from "@/constants/actions";
 import { mapState, mapActions } from "vuex";
+import { mapFields } from "@vasiliyrusin/vue-mapfields";
 
 export default {
   name: "DogsTable",
   components: {
-    customTable,
+    CustomTable,
   },
 
   created() {
@@ -22,7 +30,13 @@ export default {
 
   computed: {
     ...mapState("dogsTable", {
-      dogsList: (state) => state,
+      dogsList: (state) => state.data,
+      total: (state) => state.total,
+    }),
+
+    ...mapFields("dogsTable", {
+      fields: ["limit", "page"],
+      action: UPDATE_DOGS_LIST_PAGINATION,
     }),
   },
 

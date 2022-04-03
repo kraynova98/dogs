@@ -2,16 +2,16 @@
   <div class="table">
     <template :key="index" v-for="(item, index) in data">
       <div class="table-item">
-        <!--        <router-link-->
-        <!--          :to="{-->
-        <!--            name: 'detail',-->
-        <!--            params: { id: item.id, info: dogInformation(item.id) },-->
-        <!--          }"-->
-        <!--        >-->
-        <!--          <img :src="item.url" :alt="item.url" />-->
-        <!--        </router-link>-->
+        <img :src="item.url" :alt="item.url" />
       </div>
     </template>
+    <el-pagination
+      :currentPage="page"
+      layout="prev, pager, next"
+      :page-size="perPage"
+      :total="total"
+      @current-change="changeCurrentPage"
+    />
   </div>
 </template>
 
@@ -23,33 +23,53 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    perPage: {
+      type: Number,
+      default: 12,
+    },
+
+    total: {
+      type: Number,
+      default: null,
+    },
+
+    page: {
+      type: Number,
+      default: 1,
+    },
   },
 
-  // methods: {
-  //   dogInformation(dogId) {
-  //     return this.data.filter((dog) => dog.id === dogId);
-  //   },
-  // },
+  methods: {
+    changeCurrentPage(val) {
+      this.$emit("update:page", val);
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .table {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-column-gap: 6px;
-  grid-row-gap: 10px;
-}
+  grid-row-gap: 6px;
 
-.table-item {
-  width: 500px;
-  height: 700px;
-  overflow: hidden;
-}
+  &-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 600px;
+    overflow: hidden;
 
-img {
-  object-fit: cover;
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 
 @media screen and (max-width: 1024px) {
