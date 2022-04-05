@@ -1,11 +1,17 @@
 <template>
-  <div class="dogs-table__wrapper">
+  <div class="wrapper">
     <CustomTable
+      class="dogs-table"
       :data="dogsList"
+      :is-loading="isLoading"
       :total="total"
       v-model:per-page="limit"
       v-model:page="page"
-    ></CustomTable>
+    >
+      <template #custom-table-item="{ item }">
+        <img class="dogs-table-item__img" :src="item.url" :alt="item.url" />
+      </template>
+    </CustomTable>
   </div>
 </template>
 
@@ -32,6 +38,7 @@ export default {
     ...mapState("dogsTable", {
       dogsList: (state) => state.data,
       total: (state) => state.total,
+      isLoading: (state) => state.isLoading,
     }),
 
     ...mapFields("dogsTable", {
@@ -48,9 +55,17 @@ export default {
 };
 </script>
 
-<style scoped>
-.dogs-table__wrapper {
+<style lang="scss" scoped>
+.wrapper {
   display: flex;
   justify-content: center;
+
+  .dogs-table {
+    &-item__img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 </style>

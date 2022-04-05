@@ -28,6 +28,7 @@ interface DogsTableState {
   limit: number;
   page: number;
   total: number;
+  isLoading: boolean;
 }
 
 export type NullableDogsTableState = Nullable<DogsTableState>;

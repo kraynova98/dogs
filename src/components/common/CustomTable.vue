@@ -1,16 +1,18 @@
 <template>
-  <div class="table">
+  <div v-loading="isLoading" class="table">
     <template :key="index" v-for="(item, index) in data">
       <div class="table-item">
-        <img :src="item.url" :alt="item.url" />
+        <slot name="custom-table-item" :item="item">
+          <img class="table-item__img" :src="item.url" :alt="item.url" />
+        </slot>
       </div>
     </template>
+
     <el-pagination
-      :currentPage="page"
+      v-model:currentPage="_page"
       layout="prev, pager, next"
       :page-size="perPage"
-      :total="total"
-      @current-change="changeCurrentPage"
+      :page-count="total"
     />
   </div>
 </template>
@@ -38,11 +40,22 @@ export default {
       type: Number,
       default: 1,
     },
+
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  methods: {
-    changeCurrentPage(val) {
-      this.$emit("update:page", val);
+  computed: {
+    _page: {
+      get() {
+        return this.page;
+      },
+
+      set(value) {
+        this.$emit("update:page", value);
+      },
     },
   },
 };
@@ -56,6 +69,10 @@ export default {
   grid-column-gap: 6px;
   grid-row-gap: 6px;
 
+  .el-loading-parent--relative {
+    height: 100vh;
+  }
+
   &-item {
     display: flex;
     justify-content: center;
@@ -64,11 +81,15 @@ export default {
     height: 600px;
     overflow: hidden;
 
-    img {
+    &__img {
       object-fit: cover;
       height: 100%;
       width: 100%;
     }
+  }
+
+  .el-pagination {
+    grid-column: 2;
   }
 }
 
