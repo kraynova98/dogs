@@ -22,9 +22,7 @@ const state: () => NullableDogsTableState = initialState;
 
 const mutations: MutationTree<NullableDogsTableState> = {
   [SET_DOGS_LIST](state, { data, total }) {
-    console.log(data);
     state.data = data;
-    console.log(state.data);
     state.total = Number.parseInt(total);
   },
 
@@ -45,8 +43,6 @@ const actions: ActionTree<NullableDogsTableState, any> = {
       data,
       headers: { "pagination-count": total },
     } = await DogsService.getDogsList(state.limit, state.page);
-
-    console.log(data);
 
     commit(SET_DOGS_LIST, { data, total });
     commit(UPDATE_DOGS_LIST_LOADING, false);
