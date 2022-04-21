@@ -31,9 +31,4 @@ interface DogsTableState {
   isLoading: boolean;
 }
 
-export type DogsProfileState = {
-  data: DogTableItem;
-};
-
-export type NullableDogsProfileState = Nullable<DogsProfileState>;
 export type NullableDogsTableState = Nullable<DogsTableState>;

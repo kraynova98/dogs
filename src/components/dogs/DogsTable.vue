@@ -9,7 +9,12 @@
       v-model:page="page"
     >
       <template #custom-table-item="{ item }">
-        <img class="dogs-table-item__img" :src="item.url" :alt="item.url" />
+        <img
+          @click="openProfile(item)"
+          class="dogs-table-item__img"
+          :src="item.url"
+          :alt="item.url"
+        />
       </template>
     </CustomTable>
   </div>
@@ -21,7 +26,9 @@ import {
   GET_DOGS_LIST,
   UPDATE_DOGS_LIST_PAGINATION,
 } from "@/constants/actions";
-import { mapState, mapActions } from "vuex";
+
+import { SET_DOG_INFO } from "@/constants/mutations";
+import { mapState, mapActions, mapMutations } from "vuex";
 import { mapFields } from "@vasiliyrusin/vue-mapfields";
 
 export default {
@@ -41,6 +48,7 @@ export default {
       isLoading: (state) => state.isLoading,
     }),
 
+    // This shortcut initializes changes of these fields in store. Can be substituted by computed with getter and setter.
     ...mapFields("dogsTable", {
       fields: ["limit", "page"],
       action: UPDATE_DOGS_LIST_PAGINATION,
@@ -51,6 +59,20 @@ export default {
     ...mapActions("dogsTable", {
       GET_DOGS_LIST,
     }),
+
+    ...mapActions("dogsProfile", {
+      SET_DOG_INFO,
+    }),
+
+    openProfile(item) {
+      // const params = {
+      //   breeds: item.breeds[0],
+      //   img: item.img,
+      // };
+      this.SET_DOG_INFO(item);
+      //Providing id of clicked image to Profile component
+      this.$router.push({ name: "profile" });
+    },
   },
 };
 </script>
@@ -62,6 +84,7 @@ export default {
 
   .dogs-table {
     &-item__img {
+      cursor: pointer;
       object-fit: cover;
       height: 100%;
       width: 100%;

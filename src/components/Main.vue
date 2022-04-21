@@ -10,9 +10,6 @@ export default {
   components: {
     DogsTable,
   },
-  props: {
-    msg: String,
-  },
 };
 </script>
 

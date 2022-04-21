@@ -6,8 +6,8 @@ export class DogsService {
     limit: number | null,
     page: number | null
   ): AxiosPromise {
-    return axiosBaseInstance.get(
-      `/v1/images/search?limit=${limit}&page=${page}&order=DESC`
-    );
+    return axiosBaseInstance.get(`v1/images/search`, {
+      params: { limit: limit, page: page, order: "DESC" },
+    });
   }
 }
